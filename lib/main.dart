@@ -1,7 +1,9 @@
 import 'package:ecommerceapp/pages/bottomnav.dart';
 import 'package:ecommerceapp/pages/home.dart';
+import 'package:ecommerceapp/pages/login.dart';
 import 'package:ecommerceapp/pages/onboarding.dart';
 import 'package:ecommerceapp/pages/product_detail.dart';
+import 'package:ecommerceapp/pages/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: ProductDetail(),
+      home: SignUp(),
     );
   }
 }
