@@ -1,8 +1,10 @@
 import 'package:ecommerceapp/pages/bottomnav.dart';
 import 'package:ecommerceapp/pages/login.dart';
+import 'package:ecommerceapp/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 
 import '../widget/support_widget.dart';
 
@@ -33,6 +35,13 @@ class _SignUpState extends State<SignUp> {
                 style: TextStyle(
                   fontSize: 20,),
                 )));
+        String Id= randomAlphaNumeric(10);
+        Map<String, dynamic> userInfoMap={
+          "Name": nameController.text,
+          "Email": mailController.text,
+          "Id":Id
+        };
+        await DatabaseMethods().addUserDetails(userInfoMap, Id);
         Navigator.push(context, MaterialPageRoute(builder: (context)=> BottomNav()));
       } on FirebaseException catch(e){
         if (e.code=='weak-password'){
