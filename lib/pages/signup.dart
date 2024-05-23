@@ -1,6 +1,7 @@
 import 'package:ecommerceapp/pages/bottomnav.dart';
 import 'package:ecommerceapp/pages/login.dart';
 import 'package:ecommerceapp/services/database.dart';
+import 'package:ecommerceapp/services/shared_pref.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,10 @@ class _SignUpState extends State<SignUp> {
                   fontSize: 20,),
                 )));
         String Id= randomAlphaNumeric(10);
+        await SharedPreferenceHelper().saveUserEmail(mailController.text);
+        await SharedPreferenceHelper().saveUserId(Id);
+        await SharedPreferenceHelper().saveUserName(nameController.text);
+        await SharedPreferenceHelper().saveUserImage("");
         Map<String, dynamic> userInfoMap={
           "Name": nameController.text,
           "Email": mailController.text,
