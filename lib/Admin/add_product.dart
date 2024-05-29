@@ -18,7 +18,9 @@ class AddProduct extends StatefulWidget {
 class _AddProductState extends State<AddProduct> {
   final ImagePicker _picker=ImagePicker();
   File? selectedImage;
-  TextEditingController nameComtroller = new TextEditingController();
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController priceController = new TextEditingController();
+  TextEditingController detailController = new TextEditingController();
   
   Future getImage()async{
     var image=await _picker.pickImage(source: ImageSource.gallery);
@@ -29,7 +31,7 @@ class _AddProductState extends State<AddProduct> {
   }
 
   uploadItem() async {
-    if(selectedImage!=null && nameComtroller.text!=""){
+    if(selectedImage!=null && nameController.text!=""){
       String addId= randomAlphaNumeric(10);
       Reference firebaseStorageRef= FirebaseStorage
           .instance.ref()
@@ -40,13 +42,15 @@ class _AddProductState extends State<AddProduct> {
       var downloadUrl =await (await task).ref.getDownloadURL();
 
       Map<String, dynamic> addProduct={
-        "Name": nameComtroller.text,
+        "Name": nameController.text,
         "Image": downloadUrl,
+        "Price": priceController.text,
+        "Detail": detailController.text
 
       };
       await DatabaseMethods().addProduct(addProduct, value!).then((value) {
         selectedImage=null;
-        nameComtroller.text="";
+        nameController.text="";
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
                 backgroundColor: Colors.redAccent,
@@ -77,7 +81,7 @@ class _AddProductState extends State<AddProduct> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.only(left: 20,top: 20,right: 20),
+          margin: EdgeInsets.only(left: 20,top: 20,right: 20, bottom: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -137,13 +141,52 @@ class _AddProductState extends State<AddProduct> {
                   color: Color(0xFFececf8)
                 ),
                 child: TextField(
-                  controller: nameComtroller,
+                  controller: nameController,
                   decoration: InputDecoration(
                     border: InputBorder.none
                   ),
                 ),
               ),
-              SizedBox(height: 40,),
+              SizedBox(height: 20,),
+              Text("Product Price",
+                style: AppWidget.lightTExtFieldStyle(),
+              ),
+              SizedBox(height: 15,),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color(0xFFececf8)
+                ),
+                child: TextField(
+                  controller: priceController,
+                  decoration: InputDecoration(
+                      border: InputBorder.none
+                  ),
+                ),
+              ),
+              SizedBox(height: 20,),
+              Text("Product Details",
+                style: AppWidget.lightTExtFieldStyle(),
+              ),
+              SizedBox(height: 15,),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color(0xFFececf8)
+                ),
+                child: TextField(
+                  maxLines: 6,
+                  controller: detailController,
+                  decoration: InputDecoration(
+                      border: InputBorder.none
+                  ),
+                ),
+              ),
+              SizedBox(height: 20,),
               Text("Product Type",
                 style: AppWidget.lightTExtFieldStyle(),
               ),
