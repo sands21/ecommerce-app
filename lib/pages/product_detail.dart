@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class ProductDetail extends StatefulWidget {
-  const ProductDetail({super.key});
+  String image, name, detail, price;
+  ProductDetail({required this.name, required this.image, required this.detail, required this.price });
 
   @override
   State<ProductDetail> createState() => _ProductDetailState();
@@ -35,7 +36,8 @@ class _ProductDetailState extends State<ProductDetail> {
                     child: Icon(Icons.arrow_back_outlined)),
               ),
                 Center(
-                    child: Image.asset("images/headphone2.png",
+                    child: Image.network(
+                    widget.image,
                       height: 400,))
             ]),
             Expanded(
@@ -62,8 +64,8 @@ class _ProductDetailState extends State<ProductDetail> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Headphone", style: AppWidget.boldTextFieldStyle(),),
-                        Text("\$300",
+                        Text(widget.name, style: AppWidget.boldTextFieldStyle(),),
+                        Text("\$"+widget.price,
                             style: TextStyle(
                                 color: Color(0xFFfd6f3e),
                                 fontSize: 22,
@@ -75,7 +77,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     SizedBox(height: 20,),
                     Text("Details", style: AppWidget.semiBoldTextFieldStyle(),),
                     SizedBox(height: 10,),
-                    Text("Noice headphones. Big drivers for heavy bass and 12 mics for smooth phone calls. Very comfy cushions for uninterrupted on time."),
+                    Text(widget.detail),
                     SizedBox(height: 160,),
                     Container(
                       padding: EdgeInsets.symmetric(vertical: 15),
