@@ -43,6 +43,8 @@ dependencies:
   shared_preferences: ^2.2.3
   image_picker: ^1.1.1
   firebase_storage: ^11.7.6
+  flutter_stripe: ^10.1.1
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
